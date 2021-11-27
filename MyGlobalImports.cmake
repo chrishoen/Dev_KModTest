@@ -14,13 +14,15 @@ function(my_init_global_import_variables)
       set (MyRisLibImportPath  "C:/MyTools/MyLib/lib/libRisLib.so" PARENT_SCOPE)
       set (MyDspLibIncludePath "C:/MyTools/MyLib/include/DspLib" PARENT_SCOPE)
       set (MyDspLibImportPath  "C:/MyTools/MyLib/lib/libDspLib.so" PARENT_SCOPE)
-      set (MyGPIOIncludePath "/usr/include" PARENT_SCOPE)
+      set (MyGPIOIncludePath   "/usr/include" PARENT_SCOPE)
       set (MyGPIOImportPath  "/usr/lib/libwiringPi.so" PARENT_SCOPE)
    else()
       set (MyRisLibIncludePath "/opt/prime/include/RisLib" PARENT_SCOPE)
       set (MyRisLibImportPath  "/opt/prime/lib/libRisLib.so" PARENT_SCOPE)
       set (MyDspLibIncludePath "/opt/prime/include/DspLib" PARENT_SCOPE)
       set (MyDspLibImportPath  "/opt/prime/lib/libDspLib.so" PARENT_SCOPE)
+      set (MyGPIOIncludePath "C:/Beagle/wiringPi/include" PARENT_SCOPE)
+      set (MyGPIOImportPath  "C:/Beagle/wiringPi/lib/libwiringPi.so" PARENT_SCOPE)
    endif()
 
 endfunction()
@@ -41,6 +43,8 @@ function(my_lib_import_RisLib _target)
       add_library(RisLib SHARED IMPORTED)
       set_target_properties(RisLib PROPERTIES IMPORTED_LOCATION ${MyRisLibImportPath})
       target_link_libraries(${_target} RisLib)
+      target_link_libraries(${_target} pthread)
+      target_link_libraries(${_target} rt)
    endif()
 
 endfunction()
@@ -51,38 +55,6 @@ function(my_inc_import_RisLib _target)
 
 endfunction()
 
-
-#*******************************************************************************
-#*******************************************************************************
-#*******************************************************************************
-
-function(my_lib_import_RisLib22 _target)
-
-   if (MSVC)
-      add_library(RisLib STATIC IMPORTED)
-      set_target_properties(RisLib PROPERTIES IMPORTED_LOCATION ${MyRisLibImportPath})
-      target_link_libraries(RisLib INTERFACE ws2_32)
-      target_link_libraries(RisLib INTERFACE winmm)
-      target_link_libraries(${_target} RisLib)
-   elseif (CMAKE_SYSTEM_VERSION EQUAL 101)
-      add_library(RisLib SHARED IMPORTED)
-      set_target_properties(RisLib PROPERTIES IMPORTED_LOCATION ${MyRisLibImportPath})
-      target_link_libraries(${_target} RisLib)
-   else()
-      set (MyPThreadImportPath  "/usr/lib/x86_64-linux-gnu/libpthread.so" PARENT_SCOPE)
-      set (MyRTImportPath  "/usr/lib/x86_64-linux-gnu/librt.so" PARENT_SCOPE)
-      add_library(RisLib SHARED IMPORTED)
-      add_library(PThreadLib SHARED IMPORTED)
-      add_library(RTLib SHARED IMPORTED)
-      set_target_properties(RisLib PROPERTIES IMPORTED_LOCATION ${MyRisLibImportPath})
-      set_target_properties(PThreadLib PROPERTIES IMPORTED_LOCATION ${MyPThreadImportPath})
-      set_target_properties(RTLib PROPERTIES IMPORTED_LOCATION ${MyRTImportPath})
-      target_link_libraries(${_target} RisLib)
-      target_link_libraries(${_target} PThreadLib)
-      target_link_libraries(${_target} RTLib)
-   endif()
-
-endfunction()
 
 #*******************************************************************************
 #*******************************************************************************
@@ -109,21 +81,7 @@ endfunction()
 
 function(my_lib_import_GPIO _target)
 
-   if(MSVC)
-   else()
-      add_library(wiringPi SHARED IMPORTED)
-      set_target_properties(wiringPi PROPERTIES IMPORTED_LOCATION ${MyGPIOImportPath})
-      target_link_libraries(${_target} wiringPi)
-   endif()
-
-endfunction()
-
-function(my_inc_import_GPIO _target)
-
-   if(MSVC)
-   else()
-      target_include_directories(${_target} PUBLIC ${MyGPIOIncludePath})
-   endif()
+   target_link_libraries(${_target} wiringPi)
 
 endfunction()
 

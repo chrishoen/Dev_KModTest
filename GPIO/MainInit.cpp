@@ -1,7 +1,6 @@
 #include "stdafx.h"
 
 #include "risThreadsProcess.h"
-#include "someThreadParms.h"
 #include "cmnGPIO.h"
 
 //******************************************************************************
@@ -43,10 +42,6 @@ void main_initialize(int argc,char** argv)
    //***************************************************************************
    //***************************************************************************
    // Read parameters files.
-
-   // Read parameters files.
-   Some::gThreadParms.reset();
-   Some::gThreadParms.readSection("default");
 
    //***************************************************************************
    //***************************************************************************

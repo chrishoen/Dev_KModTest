@@ -10,9 +10,11 @@ project ("Dev_Example")
 my_init_global_import_variables()
 
 add_subdirectory ("CommonLib")
+add_subdirectory ("GPIO")
+return()
+
 add_subdirectory ("ExampleThread1")
 add_subdirectory ("Test")
-return()
 
 add_subdirectory ("CommonLib")
 add_subdirectory ("ProtoUdp")
