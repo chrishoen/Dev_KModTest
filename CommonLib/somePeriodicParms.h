@@ -46,7 +46,7 @@ namespace Some
 // structure. If so, then this class is the root.
 // 
 
-class ExampleParms : public Ris::BaseCmdLineParms
+class PeriodicParms : public Ris::BaseCmdLineParms
 {
 public:
 
@@ -62,22 +62,29 @@ public:
    //***************************************************************************
    // Members.
 
-   // Main thread timer period.
-   int mTimerPeriod;
-
-   // Delays.
-   int mDelay1;
-
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Members.
 
-   // If true then enable print view and initialize it with the
-   // given ip address. Print view routes debug prints from the
-   // backend threads to print view consoles on a host.
-   bool mPrintViewEnable;
-   char mPrintViewIPAddress[30];
+   // Test mode 1,2.
+   int  mTestMode;
+
+   // Test codes.
+   int mTestCode1;
+   int mTestCode2;
+
+   // Timer thread variables.
+   int  mMonitorThreadPeriod;
+   int  mTestThreadPeriod;
+   int  mTestThreadProcessor;
+   int  mTestThreadPriority;
+   int  mStatPeriod;
+   bool mPollProcessor;
+
+   // Sample window size.
+   int mSampleSize;
+
 
    //***************************************************************************
    //***************************************************************************
@@ -87,11 +94,11 @@ public:
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Methods.
+   // Infrastucture.
 
    // Constructor,
    typedef Ris::BaseCmdLineParms BaseClass;
-   ExampleParms();
+   PeriodicParms();
    void reset();
    void show();
 
@@ -110,10 +117,10 @@ public:
 //******************************************************************************
 // Global instance.
 
-#ifdef       _SOMEEXAMPLEPARMS_CPP_
-   ExampleParms gExampleParms;
+#ifdef _SOMEPERIODICPARMS_CPP_
+   PeriodicParms gPeriodicParms;
 #else
-   extern ExampleParms gExampleParms;
+   extern PeriodicParms gPeriodicParms;
 #endif
 
 //******************************************************************************

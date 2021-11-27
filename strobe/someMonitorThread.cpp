@@ -1,60 +1,64 @@
-#pragma once
-
 /*==============================================================================
-This file provides a set of variables that are used to define thread
-priorities and processor number for threads in these programs.
+Description:
 ==============================================================================*/
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+#include "stdafx.h"
 
+#include <time.h>
+
+#include "risProgramTime.h"
 #include "risThreadsPriorities.h"
 
-namespace Cmn
+#include "somePeriodicParms.h"
+#include "someStrobeThread.h"
+
+#define  _SOMEMONITORTHREAD_CPP_
+#include "someMonitorThread.h"
+
+namespace Some
 {
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This class provides a set of variables that are used to define thread
-// priorities and thread single processor numbers for threads in these
-// programs.
 
-class Priorities
+MonitorThread::MonitorThread()
 {
-public:
+   // Set base class variables.
+   BaseClass::setThreadName("Monitor");
 
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Members.
+   // Set base class variables.
+   BaseClass::setThreadPriority(Ris::Threads::gPriorities.mMonitor);
 
-   Ris::Threads::Priority mStrobe;
-   Ris::Threads::Priority mMonitor;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Methods.
-
-   // Constructor.
-   Priorities();
-};
+   // Set timer period.
+   BaseClass::mTimerPeriod = gPeriodicParms.mMonitorThreadPeriod;
+}
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Global singular instance.
 
-#ifdef _CMNPRIORITIES_CPP_
-          Priorities gPriorities;
-#else
-   extern Priorities gPriorities;
-#endif
+void MonitorThread::executeOnTimer(int aTimeCount)
+{
+   if (gStrobeThread->mStatPollFlag)
+   {
+      gStrobeThread->mStatPollFlag = false;
+      Prn::print(0, "Timer1 %5d %2d $$ %10.1f %10.1f %10.1f %10.1f $$ %10.1f",
+         gStrobeThread->mStatCount,
+         gStrobeThread->mThreadCurrentProcessor,
+         gStrobeThread->mStatJitterMean,
+         gStrobeThread->mStatJitterStdDev,
+         gStrobeThread->mStatJitterMin,
+         gStrobeThread->mStatJitterMax,
+         gStrobeThread->mStatJitterMaxMax);
+   }
+}
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+
 }//namespace
-

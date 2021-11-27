@@ -1,8 +1,9 @@
 #include "stdafx.h"
 
+#include <sys/mman.h>
+
 #include "risThreadsProcess.h"
-#include "risThreadsThreads.h"
-#include "someExampleParms.h"
+#include "somePeriodicParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -11,30 +12,23 @@
 
 void main_initialize(int argc,char** argv)
 {
-   printf("ExampleThread1 Program********************************************BEGIN\n");
-   printf("ExampleThread1 Program********************************************BEGIN\n");
-   printf("ExampleThread1 Program********************************************BEGIN\n\n");
+   printf("strobe Program****************************************BEGIN\n");
+   printf("strobe Program****************************************BEGIN\n");
+   printf("strobe Program****************************************BEGIN\n\n");
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Lock memory.
+
+   mlockall(MCL_CURRENT | MCL_FUTURE);
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Enter process.
 
-   // Set program process for high priority.
    Ris::Threads::enterProcessHigh();
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-
-   // Read parameters files.
-   Some::gExampleParms.reset();
-   Some::gExampleParms.readSection("default");
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Initialize program resources.
 
    //***************************************************************************
    //***************************************************************************
@@ -43,48 +37,48 @@ void main_initialize(int argc,char** argv)
 
    // Initialize print.
    Prn::resetPrint();
-   if (Some::gExampleParms.mPrintViewEnable)
-   {
-      // Initialize print.
-      Prn::resetPrint(Some::gExampleParms.mPrintViewIPAddress);
-      Prn::useConsole(1);
-      Prn::useConsole(2);
-      Prn::initializePrint();
+   Prn::useConsole(1);
+   Prn::useConsole(2);
+   Prn::initializePrint();
 
-      // Initialize print filters.
-      Prn::setFilter(Prn::View11, true, 1);
-      Prn::setFilter(Prn::View12, false, 1);
-   }
+   // Initialize print filters.
+   Prn::setFilter(Prn::ThreadInit1,     true);
+   Prn::setFilter(Prn::ThreadRun1,      true);
+   Prn::setFilter(Prn::ThreadRun2,      false);
+   Prn::setFilter(Prn::ThreadRun3,      false);
+   Prn::setFilter(Prn::ThreadRun4,      false);
 
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Initialize program resources.
+   Prn::setFilter(Prn::View11, true, 1);
+   Prn::setFilter(Prn::View12, false, 1);
+   Prn::setFilter(Prn::View21, true, 2);
+   Prn::setFilter(Prn::View22, false, 2);
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   Prn::print(Prn::View11, "ExampleThread1 Program********************************************BEGIN");
+   // Read parameters files.
+
+   // Read parameters files.
+   Some::gPeriodicParms.reset();
+   Some::gPeriodicParms.readSection("default");
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Finalize program resourcs.
+// Finalize program resources.
 
 void main_finalize()
 {
-   Prn::print(Prn::View11, "ExampleThread1 Program********************************************END");
-   printf("\n");
-   printf("ExampleThread1 Program********************************************END\n");
-   printf("ExampleThread1 Program********************************************END\n");
-   printf("ExampleThread1 Program********************************************END\n");
-
    // Finalize print facility.
    Prn::finalizePrint();
 
    // Exit process.
    Ris::Threads::exitProcess();
+
+   // Done.
+   printf("\n");
+   printf("strobe Program****************************************END\n\n");
 }
 
 //******************************************************************************

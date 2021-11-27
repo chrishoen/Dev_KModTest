@@ -13,4 +13,6 @@
 
 #include "my_functions.h"
 #include "prnPrint.h"
+#include "logFiles.h"
 #include "risPortableCalls.h"
+

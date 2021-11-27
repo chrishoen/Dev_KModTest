@@ -1,11 +1,13 @@
 #include "stdafx.h"
 
 #include "risThreadsProcess.h"
-#include "MainInit.h"
 #include "risCmdLineConsole.h"
 #include "CmdLineExec.h"
+#include "MainInit.h"
 
-#include "someExampleTimerThread.h"
+#include "somePeriodicParms.h"
+#include "someStrobeThread.h"
+#include "someMonitorThread.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -16,17 +18,19 @@ int main(int argc,char** argv)
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Begin program.
+   // Initialize program.
 
-   main_initialize(argc, argv);
+   main_initialize(argc,argv);
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Launch program threads.
 
-   Some::gExampleTimerThread = new Some::ExampleTimerThread;
-   Some::gExampleTimerThread->launchThread();
+   Some::gStrobeThread = new Some::StrobeThread;
+   Some::gStrobeThread->launchThread();
+   Some::gMonitorThread = new Some::MonitorThread;
+   Some::gMonitorThread->launchThread();
 
    //***************************************************************************
    //***************************************************************************
@@ -34,40 +38,41 @@ int main(int argc,char** argv)
    // Show program threads.
 
    Ris::Threads::showCurrentThreadInfo();
-   if (Some::gExampleTimerThread)    Some::gExampleTimerThread->showThreadInfo();
+   Some::gStrobeThread->showThreadInfo();
+   Some::gMonitorThread->showThreadInfo();
+
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Execute console command line executive, wait for user to exit.
+   // Start user command line executive, wait for user to exit.
 
-   CmdLineExec* tExec = new CmdLineExec;
-   Ris::gCmdLineConsole.execute(tExec);
-   delete tExec;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Shutdown program threads.
-
-   if (Some::gExampleTimerThread)     Some::gExampleTimerThread->shutdownThread();
+   CmdLineExec* exec = new CmdLineExec;
+   Ris::executeCmdLineConsole(exec);
+   delete exec;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Delete program threads.
+   // Shutdown program Threads.
 
-   if (Some::gExampleTimerThread)
-   {
-      delete Some::gExampleTimerThread;
-      Some::gExampleTimerThread = 0;
-   }
+   Some::gStrobeThread->shutdownThread();
+   delete Some::gStrobeThread;
+   Some::gStrobeThread = 0;
+
+   Some::gMonitorThread->shutdownThread();
+   delete Some::gMonitorThread;
+   Some::gMonitorThread = 0;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // End program.
+   // Finalize program.
 
    main_finalize();
    return 0;
 }
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************

@@ -21,10 +21,8 @@ namespace Cmn
 
 Priorities::Priorities()
 {
-   mTimer         = Ris::Threads::Priority(-1, 70);
-   mQCall         = Ris::Threads::Priority(-1, 70);
-   mLong          = Ris::Threads::Priority(-1, 60);
-   mShort         = Ris::Threads::Priority(-1, 70);
+   mMonitor       = Ris::Threads::Priority(-1, 70);
+   mStrobe        = Ris::Threads::Priority(-1, 99);
 }
 
 //******************************************************************************

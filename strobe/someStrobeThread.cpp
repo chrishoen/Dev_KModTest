@@ -7,11 +7,15 @@ Description:
 //******************************************************************************
 #include "stdafx.h"
 
-#include "cmnPriorities.h"
-#include "someExampleParms.h"
+#include <time.h>
 
-#define  _SOMEEXAMPLETIMERTHREAD_CPP_
-#include "someExampleTimerThread.h"
+#include "risProgramTime.h"
+#include "risThreadsPriorities.h"
+
+#include "somePeriodicParms.h"
+
+#define  _SOMESTROBETHREAD1_CPP_
+#include "someStrobeThread.h"
 
 namespace Some
 {
@@ -19,28 +23,37 @@ namespace Some
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Constructor.
 
-ExampleTimerThread::ExampleTimerThread()
+StrobeThread::StrobeThread()
 {
    // Set base class variables.
-   BaseClass::setThreadName("ExampleTimer");
-   BaseClass::setThreadPriority(Cmn::gPriorities.mTimer);
-   BaseClass::mTimerPeriod = gExampleParms.mTimerPeriod;
+   BaseClass::setThreadName("Strobe");
+   BaseClass::setThreadPriority(
+      Ris::Threads::Priority(
+         gPeriodicParms.mTestThreadProcessor,
+         gPeriodicParms.mTestThreadPriority));
+
+   // Set timer period.
+   BaseClass::mTimerPeriod = gPeriodicParms.mTestThreadPeriod;
+   BaseClass::mPollProcessor = gPeriodicParms.mPollProcessor;
+   BaseClass::mStatPeriod = gPeriodicParms.mStatPeriod;
+
+   // Set member variables.
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Execute periodically. This is called by the base class timer.
 
-void ExampleTimerThread::executeOnTimer(int aTimeCount)
+void StrobeThread::executeOnTimer(int aTimeCount)
 {
-   Prn::print(Prn::View11, "ExampleTimerThread::executeOnTimer %d", aTimeCount);
+   if (aTimeCount == 0)
+   {
+      BaseClass::showThreadFullInfo();
+   }
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-
 }//namespace
