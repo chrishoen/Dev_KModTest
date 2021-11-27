@@ -14,9 +14,11 @@ namespace Cmn
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// This class provides a set of variables that are used to define thread
-// priorities and thread single processor numbers for threads in these
-// programs.
+// This class provides an interface to some gpio bits.
+// GND    : PIN25
+// GPIO5  : PIN29 OUT : A 
+// GPIO6  : PIN31 IN  : B
+// GPIO13 : PIN33
 
 class GPIO
 {
@@ -27,8 +29,8 @@ public:
    //***************************************************************************
    // Constants.
 
-   static const int cAStopBit = 15;
-   static const int cFeynmanResetBit = 13;
+   static const int cGpioA = 5;
+   static const int cGpioB = 6;
 
    //***************************************************************************
    //***************************************************************************
@@ -52,12 +54,12 @@ public:
    //***************************************************************************
    // Methods.
 
-   // Write to tthe digital output for G38.3 virtual stop.
-   void writeAStop(bool aValue);
+   // Write to the digital output for gpio A.
+   void writeA(bool aValue);
 
-   // Hit the Feynman reset bit.
-   // Jason says go low to reset then bring back to high(not driven).
-   void doFeynmanReset();
+   // Read from the digital output for gpio B.
+   bool readB();
+
 };
 
 //******************************************************************************

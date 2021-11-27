@@ -28,17 +28,13 @@ void CmdLineExec::reset()
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
-   if (aCmd->isCmd("VSTOP"))     executeAStop(aCmd);
+   if (aCmd->isCmd("A"))         executeWriteA(aCmd);
+   if (aCmd->isCmd("B"))         executeReadB(aCmd);
 
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
    if (aCmd->isCmd("GO3"))       executeGo3(aCmd);
    if (aCmd->isCmd("GO4"))       executeGo4(aCmd);
-   if (aCmd->isCmd("GO5"))       executeGo5(aCmd);
-   if (aCmd->isCmd("GO6"))       executeGo6(aCmd);
-   if (aCmd->isCmd("GO7"))       executeGo7(aCmd);
-   if (aCmd->isCmd("GO8"))       executeGo8(aCmd);
-   if (aCmd->isCmd("GO9"))       executeGo9(aCmd);
    if (aCmd->isCmd("Parms"))     executeParms(aCmd);
 }
 
@@ -46,10 +42,19 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeAStop(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeWriteA(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, false);
-   Cmn::gGPIO.writeAStop(aCmd->argBool(1));
+   Cmn::gGPIO.writeA(aCmd->argBool(1));
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeReadB(Ris::CmdLineCmd* aCmd)
+{
+   Prn::print(0,"GpioB %d",Cmn::gGPIO.readB());
 }
 
 //******************************************************************************
@@ -82,47 +87,6 @@ void CmdLineExec::executeGo3(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo4(Ris::CmdLineCmd* aCmd)
 {
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-void CmdLineExec::executeGo5(Ris::CmdLineCmd* aCmd)
-{
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-
-void CmdLineExec::executeGo6(Ris::CmdLineCmd* aCmd)
-{
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-
-void CmdLineExec::executeGo7(Ris::CmdLineCmd* aCmd)
-{
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-
-void CmdLineExec::executeGo8(Ris::CmdLineCmd* aCmd)
-{
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-
-void CmdLineExec::executeGo9(Ris::CmdLineCmd* aCmd)
-{
-   int tCount = 0;
-   Prn::print(0, "tCount %10.6f", tCount);
 }
 
 //******************************************************************************

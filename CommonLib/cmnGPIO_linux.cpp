@@ -27,9 +27,9 @@ GPIO::GPIO()
 
 void GPIO::initialize()
 {
-   wiringPiSetupPhys();
-   pinMode(cAStopBit, OUTPUT);
-   pinMode(cFeynmanResetBit, OUTPUT);
+   wiringPiSetupGpio();
+   pinMode(cGpioA, OUTPUT);
+   pinMode(cGpioB, INPUT);
 }
 
 void GPIO::finalize()
@@ -40,31 +40,28 @@ void GPIO::finalize()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Write to tthe digital output for G38.3 virtual stop.
+// Write to the digital output for gpio A.
 
-void GPIO::writeAStop(bool aValue)
+void GPIO::writeA(bool aValue)
 {
    if (aValue)
    {
-      digitalWrite(cAStopBit, HIGH);
+      digitalWrite(cGpioA, HIGH);
    }
    else
    {
-      digitalWrite(cAStopBit, LOW);
+      digitalWrite(cGpioA, LOW);
    }
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Strobe the Feynman reset bit.
-// Jason says go low to reset then bring back to high(not driven).
+// Read from the digital output for gpio B.
 
-void GPIO::doFeynmanReset()
+bool GPIO::readB()
 {
-   digitalWrite(cFeynmanResetBit, LOW);
-   Ris::Threads::threadSleep(2000);
-   digitalWrite(cFeynmanResetBit, HIGH);
+   return digitalRead(cGpioB) == HIGH;
 }
 
 //******************************************************************************
