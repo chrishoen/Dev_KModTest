@@ -46,14 +46,13 @@ void MonitorThread::executeOnTimer(int aTimeCount)
    if (gStrobeThread->mStatPollFlag)
    {
       gStrobeThread->mStatPollFlag = false;
-      Prn::print(0, "Timer1 %5d %2d $$ %10.1f %10.1f %10.1f %10.1f $$ %10.1f",
+      Prn::print(0, "S %5d %2d  J %5.1f %5.1f %5.1f  E %5.1f",
          gStrobeThread->mStatCount,
          gStrobeThread->mThreadCurrentProcessor,
          gStrobeThread->mStatJitterMean,
          gStrobeThread->mStatJitterStdDev,
-         gStrobeThread->mStatJitterMin,
          gStrobeThread->mStatJitterMax,
-         gStrobeThread->mStatJitterMaxMax);
+         gStrobeThread->mStatExecMax);
    }
 }
 
