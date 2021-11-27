@@ -11,6 +11,7 @@ my_inc_import_RisLib(strobe)
 my_inc_import_CommonLib(strobe)
 
 my_lib_import_CommonLib(strobe)
+my_lib_import_GPIO(strobe)
 my_lib_import_RisLib(strobe)
 
 if(MSVC)

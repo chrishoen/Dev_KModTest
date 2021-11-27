@@ -56,13 +56,13 @@ int main(int argc,char** argv)
    //***************************************************************************
    // Shutdown program Threads.
 
-   Some::gStrobeThread->shutdownThread();
-   delete Some::gStrobeThread;
-   Some::gStrobeThread = 0;
-
    Some::gMonitorThread->shutdownThread();
    delete Some::gMonitorThread;
    Some::gMonitorThread = 0;
+
+   Some::gStrobeThread->shutdownThread();
+   delete Some::gStrobeThread;
+   Some::gStrobeThread = 0;
 
    //***************************************************************************
    //***************************************************************************
