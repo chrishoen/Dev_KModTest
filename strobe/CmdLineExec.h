@@ -57,6 +57,9 @@ public:
    void executeWriteA(Ris::CmdLineCmd* aCmd);
    void executeReadB(Ris::CmdLineCmd* aCmd);
 
+   void executeFn0(Ris::CmdLineCmd* aCmd);
+   void executeFn1(Ris::CmdLineCmd* aCmd);
+
    void executeGo1      (Ris::CmdLineCmd* aCmd);
    void executeGo2      (Ris::CmdLineCmd* aCmd);
    void executeGo3      (Ris::CmdLineCmd* aCmd);

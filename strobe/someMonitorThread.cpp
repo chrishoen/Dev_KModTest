@@ -46,7 +46,7 @@ void MonitorThread::executeOnTimer(int aTimeCount)
    if (gStrobeThread->mStatPollFlag)
    {
       gStrobeThread->mStatPollFlag = false;
-      Prn::print(0, "S %5d %2d  J %5.1f %5.1f %5.1f  E %5.1f",
+      Prn::print(Prn::Show1, "S %5d %2d  J %5.1f %5.1f %5.1f  E %5.1f",
          gStrobeThread->mStatCount,
          gStrobeThread->mThreadCurrentProcessor,
          gStrobeThread->mStatJitterMean,

@@ -35,6 +35,9 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("A"))         executeWriteA(aCmd);
    if (aCmd->isCmd("B"))         executeReadB(aCmd);
 
+   if (aCmd->isCmd("0"))         executeFn0(aCmd);
+   if (aCmd->isCmd("1"))         executeFn1(aCmd);
+
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
    if (aCmd->isCmd("GO3"))       executeGo3(aCmd);
@@ -56,6 +59,28 @@ void CmdLineExec::executeWriteA(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeReadB(Ris::CmdLineCmd* aCmd)
 {
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeFn0(Ris::CmdLineCmd* aCmd)
+{
+   Prn::unsuppressPrint();
+   Prn::setFilter(Prn::Show1, false);
+   Prn::setFilter(Prn::Show2, false);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeFn1(Ris::CmdLineCmd* aCmd)
+{
+   Prn::unsuppressPrint();
+   Prn::setFilter(Prn::Show1, true);
+   Prn::setFilter(Prn::Show2, false);
 }
 
 //******************************************************************************
