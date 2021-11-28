@@ -35,6 +35,7 @@ MyDev::MyDev()
 {
    mValidFlag = false;
    mDevFd = 0;
+   mTestValue = 0;
 }
 
 void MyDev::initialize()
@@ -63,35 +64,6 @@ void MyDev::finalize()
       mValidFlag = false;
       close(mDevFd);
       mDevFd = -1;
-   }
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Write to the digital output for gpio A.
-
-void MyDev::writeAold(bool aValue)
-{
-   // Guard.
-   if (!mValidFlag) return;
-
-   // Write to the device driver.
-   int tRet = 0;
-   char tBuffer[10];
-   if (aValue)
-   {
-      strcpy(tBuffer, "1\n");
-   }
-   else
-   {
-      strcpy(tBuffer, "0\n");
-   }
-   tRet = write(mDevFd, tBuffer, 2);
-   if (tRet < 0)
-   {
-      printf("device write FAIL  %d %s\n", errno, strerror(errno));
-      finalize();
    }
 }
 
@@ -138,6 +110,23 @@ void MyDev::doTest1(int* aValue)
    int tRet = 0;
    tRet = ioctl(mDevFd, 201, aValue);
    if (tRet < 0)
+   {
+      printf("device ioctl FAIL  %d %s\n", errno, strerror(errno));
+      finalize();
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Do an ioctl test.
+
+void MyDev::doTest2()
+{
+   // Guard.
+   if (!mValidFlag) return;
+
+   if(ioctl(mDevFd, 201, &mTestValue) < 0)
    {
       printf("device ioctl FAIL  %d %s\n", errno, strerror(errno));
       finalize();

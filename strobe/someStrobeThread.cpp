@@ -73,8 +73,17 @@ void StrobeThread::executeOnTimer(int aTimeCount)
    if (!mTPFlag) return;
    if (!gMyDev.mValidFlag) return;
 
-   // Write to the device driver.
-   gMyDev.writeA(aTimeCount % 2);
+   if (Cmn::gStrobeParms.mTestCode1 == 1)
+   {
+      // Write to the device driver.
+      gMyDev.writeA(aTimeCount % 2);
+   }
+   else if (Cmn::gStrobeParms.mTestCode1 == 2)
+   {
+      // Write to the device driver.
+      gMyDev.doTest2();
+   }
+
 }
 
 //******************************************************************************

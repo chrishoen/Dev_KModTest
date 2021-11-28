@@ -35,7 +35,8 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("TP"))        Some::gStrobeThread->mTPFlag = aCmd->argBool(1);
    if (aCmd->isCmd("W"))         executeWriteA(aCmd);
    if (aCmd->isCmd("R"))         executeReadB(aCmd);
-   if (aCmd->isCmd("test"))      executeTest(aCmd);
+   if (aCmd->isCmd("T1"))        executeTest1(aCmd);
+   if (aCmd->isCmd("T2"))        executeTest2(aCmd);
 
    if (aCmd->isCmd("0"))         executeFn0(aCmd);
    if (aCmd->isCmd("1"))         executeFn1(aCmd);
@@ -68,13 +69,23 @@ void CmdLineExec::executeReadB(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeTest(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeTest1(Ris::CmdLineCmd* aCmd)
 {
    int tValue = aCmd->argInt(1);
    Prn::print(0, "Value1 %d", tValue);
 
    Some::gMyDev.doTest1(&tValue);
    Prn::print(0, "Value2 %d", tValue);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeTest2(Ris::CmdLineCmd* aCmd)
+{
+   Some::gMyDev.doTest2();
+   Prn::print(0, "Value2 %d", Some::gMyDev.mTestValue);
 }
 
 //******************************************************************************
