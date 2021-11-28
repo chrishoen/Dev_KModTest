@@ -40,6 +40,7 @@ StrobeThread::StrobeThread()
    BaseClass::mStatPeriod = gPeriodicParms.mStatPeriod;
 
    // Set member variables.
+   mTPFlag = false;
 }
 
 //******************************************************************************
@@ -48,6 +49,8 @@ StrobeThread::StrobeThread()
 
 void StrobeThread::executeOnTimer(int aTimeCount)
 {
+   if (!mTPFlag) return;
+
    Cmn::gGPIO.writeA(aTimeCount % 2);
 }
 

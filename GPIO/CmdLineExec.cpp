@@ -1,6 +1,9 @@
 
 #include "stdafx.h"
 
+#include "somePeriodicParms.h"
+#include "someStrobeThread.h"
+using namespace Some;
 #include "cmnGPIO.h"
 #include "CmdLineExec.h"
 
@@ -95,6 +98,9 @@ void CmdLineExec::executeGo4(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
 {
+   Some::gPeriodicParms.reset();
+   Some::gPeriodicParms.readSection("default");
+   Some::gPeriodicParms.show();
 }
 
 //******************************************************************************
