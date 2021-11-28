@@ -3,8 +3,11 @@
 #include "risThreadsProcess.h"
 #include "risCmdLineConsole.h"
 #include "CmdLineExec.h"
-
 #include "MainInit.h"
+
+#include "somePeriodicParms.h"
+#include "someStrobeThread.h"
+#include "someMonitorThread.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -15,7 +18,7 @@ int main(int argc,char** argv)
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Begin program.
+   // Initialize program.
 
    main_initialize(argc,argv);
 
@@ -24,31 +27,47 @@ int main(int argc,char** argv)
    //***************************************************************************
    // Launch program threads.
 
+   Some::gStrobeThread = new Some::StrobeThread;
+   Some::gStrobeThread->launchThread();
+   Some::gMonitorThread = new Some::MonitorThread;
+   Some::gMonitorThread->launchThread();
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Show program threads.
 
    Ris::Threads::showCurrentThreadInfo();
+   Some::gStrobeThread->showThreadInfo();
+   Some::gMonitorThread->showThreadInfo();
+
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Execute user command line executive, wait for user to exit.
+   // Start user command line executive, wait for user to exit.
 
-   CmdLineExec* tExec = new CmdLineExec;
-   Ris::gCmdLineConsole.execute(tExec);
-   delete tExec;
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Shutdown program threads.
+   CmdLineExec* exec = new CmdLineExec;
+   Ris::executeCmdLineConsole(exec);
+   delete exec;
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // End program.
+   // Shutdown program Threads.
+
+   Some::gMonitorThread->shutdownThread();
+   delete Some::gMonitorThread;
+   Some::gMonitorThread = 0;
+
+   Some::gStrobeThread->shutdownThread();
+   delete Some::gStrobeThread;
+   Some::gStrobeThread = 0;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Finalize program.
 
    main_finalize();
    return 0;
@@ -57,4 +76,3 @@ int main(int argc,char** argv)
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-

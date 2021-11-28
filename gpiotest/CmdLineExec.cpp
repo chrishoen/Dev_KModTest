@@ -1,11 +1,12 @@
 
 #include "stdafx.h"
 
+#include "cmnGPIO.h"
+#include "CmdLineExec.h"
+
 #include "somePeriodicParms.h"
 #include "someStrobeThread.h"
 using namespace Some;
-#include "cmnGPIO.h"
-#include "CmdLineExec.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -31,6 +32,7 @@ void CmdLineExec::reset()
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
+   if (aCmd->isCmd("TP"))        Some::gStrobeThread->mTPFlag = aCmd->argBool(1);
    if (aCmd->isCmd("A"))         executeWriteA(aCmd);
    if (aCmd->isCmd("B"))         executeReadB(aCmd);
 

@@ -1,6 +1,9 @@
 #include "stdafx.h"
 
+#include <sys/mman.h>
+
 #include "risThreadsProcess.h"
+#include "somePeriodicParms.h"
 #include "cmnGPIO.h"
 
 //******************************************************************************
@@ -10,16 +13,22 @@
 
 void main_initialize(int argc,char** argv)
 {
-   printf("GPIO Program**********************************************BEGIN\n");
-   printf("GPIO Program**********************************************BEGIN\n");
-   printf("GPIO Program**********************************************BEGIN\n\n");
+   printf("gpiotest Program**************************************BEGIN\n");
+   printf("gpiotest Program**************************************BEGIN\n");
+   printf("gpiotest Program**************************************BEGIN\n");
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Lock memory.
+
+   mlockall(MCL_CURRENT | MCL_FUTURE);
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Enter process.
 
-   // Enter process.
    Ris::Threads::enterProcessHigh();
 
    //***************************************************************************
@@ -29,6 +38,8 @@ void main_initialize(int argc,char** argv)
 
    // Initialize print.
    Prn::resetPrint();
+   Prn::useConsole(1);
+   Prn::useConsole(2);
    Prn::initializePrint();
 
    // Initialize print filters.
@@ -38,10 +49,19 @@ void main_initialize(int argc,char** argv)
    Prn::setFilter(Prn::ThreadRun3,      false);
    Prn::setFilter(Prn::ThreadRun4,      false);
 
+   Prn::setFilter(Prn::View11, true, 1);
+   Prn::setFilter(Prn::View12, false, 1);
+   Prn::setFilter(Prn::View21, true, 2);
+   Prn::setFilter(Prn::View22, false, 2);
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Read parameters files.
+
+   // Read parameters files.
+   Some::gPeriodicParms.reset();
+   Some::gPeriodicParms.readSection("default");
 
    //***************************************************************************
    //***************************************************************************
@@ -59,18 +79,15 @@ void main_initialize(int argc,char** argv)
 
 void main_finalize()
 {
-   // Finalize gpio.
-   Cmn::gGPIO.finalize();
-
    // Finalize print facility.
    Prn::finalizePrint();
 
    // Exit process.
    Ris::Threads::exitProcess();
 
-   // done.
+   // Done.
    printf("\n");
-   printf("GPIO Program**********************************************END\n\n");
+   printf("gpiotest Program**************************************EXIT\n");
 }
 
 //******************************************************************************
