@@ -4,6 +4,7 @@
 #include "cmnPeriodicParms.h"
 #include "cmnStrobeParms.h"
 #include "someStrobeThread.h"
+#include "someMyDev.h"
 
 #include "CmdLineExec.h"
 
@@ -32,8 +33,9 @@ void CmdLineExec::reset()
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
    if (aCmd->isCmd("TP"))        Some::gStrobeThread->mTPFlag = aCmd->argBool(1);
-   if (aCmd->isCmd("A"))         executeWriteA(aCmd);
-   if (aCmd->isCmd("B"))         executeReadB(aCmd);
+   if (aCmd->isCmd("W"))         executeWriteA(aCmd);
+   if (aCmd->isCmd("R"))         executeReadB(aCmd);
+   if (aCmd->isCmd("test"))      executeTest(aCmd);
 
    if (aCmd->isCmd("0"))         executeFn0(aCmd);
    if (aCmd->isCmd("1"))         executeFn1(aCmd);
@@ -51,6 +53,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeWriteA(Ris::CmdLineCmd* aCmd)
 {
+   Some::gMyDev.writeA(aCmd->argBool(1));
 }
 
 //******************************************************************************
@@ -59,6 +62,19 @@ void CmdLineExec::executeWriteA(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeReadB(Ris::CmdLineCmd* aCmd)
 {
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeTest(Ris::CmdLineCmd* aCmd)
+{
+   int tValue = aCmd->argInt(1);
+   Prn::print(0, "Value1 %d", tValue);
+
+   Some::gMyDev.doTest1(&tValue);
+   Prn::print(0, "Value2 %d", tValue);
 }
 
 //******************************************************************************

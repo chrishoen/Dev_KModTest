@@ -71,7 +71,7 @@ void MyDev::finalize()
 //******************************************************************************
 // Write to the digital output for gpio A.
 
-void MyDev::writeA(bool aValue)
+void MyDev::writeAold(bool aValue)
 {
    // Guard.
    if (!mValidFlag) return;
@@ -98,11 +98,50 @@ void MyDev::writeA(bool aValue)
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// Write to the digital output for gpio A.
+
+void MyDev::writeA(bool aValue)
+{
+   // Guard.
+   if (!mValidFlag) return;
+
+   int tValue = aValue;
+   int tRet = 0;
+   tRet = ioctl(mDevFd, 101, &tValue);
+   if (tRet < 0)
+   {
+      printf("device ioctl FAIL  %d %s\n", errno, strerror(errno));
+      finalize();
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 // Read from the digital output for gpio B.
 
 bool MyDev::readB()
 {
    return false;
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Do an ioctl test.
+
+void MyDev::doTest1(int* aValue)
+{
+   // Guard.
+   if (!mValidFlag) return;
+
+   int tRet = 0;
+   tRet = ioctl(mDevFd, 201, aValue);
+   if (tRet < 0)
+   {
+      printf("device ioctl FAIL  %d %s\n", errno, strerror(errno));
+      finalize();
+   }
 }
 
 //******************************************************************************

@@ -56,6 +56,7 @@ public:
    // Execute specific commands.
    void executeWriteA(Ris::CmdLineCmd* aCmd);
    void executeReadB(Ris::CmdLineCmd* aCmd);
+   void executeTest(Ris::CmdLineCmd* aCmd);
 
    void executeFn0(Ris::CmdLineCmd* aCmd);
    void executeFn1(Ris::CmdLineCmd* aCmd);
