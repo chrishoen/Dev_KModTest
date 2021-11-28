@@ -96,7 +96,10 @@ void CmdLineExec::executeGo4(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
 {
+   Some::gPeriodicParms.readSection("Periodic");
    Some::gPeriodicParms.show();
+
+   Some::gStrobeParms.readSection("Strobe");
    Some::gStrobeParms.show();
 }
 

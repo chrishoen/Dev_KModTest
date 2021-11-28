@@ -34,6 +34,9 @@ public:
    //******************************************************************************
    // Members.
 
+   // Device file descriptor.
+   int mDevFd;
+
    //******************************************************************************
    //******************************************************************************
    //******************************************************************************
@@ -42,8 +45,22 @@ public:
    // Constructor.
    StrobeThread();
 
-   // Base class overloads.
-   void executeOnTimer(int aTimeCount) override;
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Methods. Thread base class overloads.
+
+   // Thread init function. This is called by the base class immediately 
+   // after the thread starts running.
+   void threadInitFunction() override;
+
+   // Thread exit function. This is called by the base class immediately
+   // before the thread is terminated.
+   void threadExitFunction() override;
+
+   // Execute periodically. This is called by the base class timer.
+   void executeOnTimer(int aTimerCount) override;
+
 };
 
 //******************************************************************************

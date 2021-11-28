@@ -45,15 +45,14 @@ void main_initialize(int argc,char** argv)
    // Initialize parms.
 
    // Read parameters files.
-   Some::gPeriodicParms.reset();
-   Some::gPeriodicParms.setFilePath(tParmsPath);
-   Some::gPeriodicParms.readSection("Periodic");
-
-   // Read parameters files.
    Some::gStrobeParms.reset();
    Some::gStrobeParms.setFilePath(tParmsPath);
    Some::gStrobeParms.readSection("Strobe");
 
+   // Read parameters files.
+   Some::gPeriodicParms.reset();
+   Some::gPeriodicParms.setFilePath(tParmsPath);
+   Some::gPeriodicParms.readSection("Periodic");
 
    //***************************************************************************
    //***************************************************************************
@@ -77,15 +76,6 @@ void main_initialize(int argc,char** argv)
    Prn::setFilter(Prn::View12, false, 1);
    Prn::setFilter(Prn::View21, true, 2);
    Prn::setFilter(Prn::View22, false, 2);
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Read parameters files.
-
-   // Read parameters files.
-   Some::gPeriodicParms.reset();
-   Some::gPeriodicParms.readSection("");
 }
 
 //******************************************************************************
