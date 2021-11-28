@@ -4,9 +4,8 @@
 #include "cmnGPIO.h"
 #include "CmdLineExec.h"
 
-#include "somePeriodicParms.h"
+#include "cmnPeriodicParms.h"
 #include "someStrobeThread.h"
-using namespace Some;
 
 //******************************************************************************
 //******************************************************************************
@@ -100,9 +99,9 @@ void CmdLineExec::executeGo4(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
 {
-   Some::gPeriodicParms.reset();
-   Some::gPeriodicParms.readSection("default");
-   Some::gPeriodicParms.show();
+   Cmn::gPeriodicParms.reset();
+   Cmn::gPeriodicParms.readSection("default");
+   Cmn::gPeriodicParms.show();
 }
 
 //******************************************************************************

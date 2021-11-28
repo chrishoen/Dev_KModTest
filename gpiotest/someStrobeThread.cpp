@@ -12,7 +12,7 @@ Description:
 #include "risProgramTime.h"
 #include "risThreadsPriorities.h"
 
-#include "somePeriodicParms.h"
+#include "cmnPeriodicParms.h"
 #include "cmnGPIO.h"
 
 #define  _SOMESTROBETHREAD1_CPP_
@@ -31,13 +31,13 @@ StrobeThread::StrobeThread()
    BaseClass::setThreadName("Strobe");
    BaseClass::setThreadPriority(
       Ris::Threads::Priority(
-         gPeriodicParms.mTestThreadProcessor,
-         gPeriodicParms.mTestThreadPriority));
+         Cmn::gPeriodicParms.mTestThreadProcessor,
+         Cmn::gPeriodicParms.mTestThreadPriority));
 
    // Set timer period.
-   BaseClass::mTimerPeriod = gPeriodicParms.mTestThreadPeriod;
-   BaseClass::mPollProcessor = gPeriodicParms.mPollProcessor;
-   BaseClass::mStatPeriod = gPeriodicParms.mStatPeriod;
+   BaseClass::mTimerPeriod = Cmn::gPeriodicParms.mTestThreadPeriod;
+   BaseClass::mPollProcessor = Cmn::gPeriodicParms.mPollProcessor;
+   BaseClass::mStatPeriod = Cmn::gPeriodicParms.mStatPeriod;
 
    // Set member variables.
    mTPFlag = false;

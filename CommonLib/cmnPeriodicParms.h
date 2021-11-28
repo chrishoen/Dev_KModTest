@@ -14,7 +14,7 @@ Parameters class whose values are read from a command file.
 //******************************************************************************
 //******************************************************************************
 
-namespace Some
+namespace Cmn
 {
 
 //******************************************************************************
@@ -46,9 +46,10 @@ namespace Some
 // structure. If so, then this class is the root.
 // 
 
-class StrobeParms : public Ris::BaseCmdLineParms
+class PeriodicParms : public Ris::BaseCmdLineParms
 {
 public:
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
@@ -61,17 +62,25 @@ public:
    //***************************************************************************
    // Members.
 
-   // Device path.
-   char mDevPath[cMaxStringSize];
-
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Members.
 
-   // Test codes.
-   int mTestCode1;
-   int mTestCode2;
+   // Test mode 1,2.
+   int  mTestMode;
+
+   // Timer thread variables.
+   int  mMonitorThreadPeriod;
+   int  mTestThreadPeriod;
+   int  mTestThreadProcessor;
+   int  mTestThreadPriority;
+   int  mStatPeriod;
+   bool mPollProcessor;
+
+   // Sample window size.
+   int mSampleSize;
+
 
    //***************************************************************************
    //***************************************************************************
@@ -85,7 +94,7 @@ public:
 
    // Constructor,
    typedef Ris::BaseCmdLineParms BaseClass;
-   StrobeParms();
+   PeriodicParms();
    void reset();
    void show();
 
@@ -104,10 +113,10 @@ public:
 //******************************************************************************
 // Global instance.
 
-#ifdef _SOMESTROBEPARMS_CPP_
-   StrobeParms gStrobeParms;
+#ifdef _CMNPERIODICPARMS_CPP_
+   PeriodicParms gPeriodicParms;
 #else
-   extern StrobeParms gStrobeParms;
+   extern PeriodicParms gPeriodicParms;
 #endif
 
 //******************************************************************************

@@ -5,17 +5,23 @@ Description:
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+
 #include "stdafx.h"
 
-#include "risProgramTime.h"
-#include "risThreadsPriorities.h"
+#include <sys/stat.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <termios.h>
+#include <unistd.h>
+#include <signal.h>
+#include <poll.h>
+#include <sys/ioctl.h>
+#include <sys/stat.h>
 
-#include "cmnPeriodicParms.h"
 #include "cmnStrobeParms.h"
-#include "someMyDev.h"
 
-#define  _SOMESTROBETHREAD1_CPP_
-#include "someStrobeThread.h"
+#define  _SOMEMYDEV_CPP_
+#include "someMyDev.h"
 
 namespace Some
 {
@@ -23,58 +29,80 @@ namespace Some
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// Constructor.
 
-StrobeThread::StrobeThread()
+MyDev::MyDev()
 {
-   // Set base class variables.
-   BaseClass::setThreadName("Strobe");
-   BaseClass::setThreadPriority(
-      Ris::Threads::Priority(
-         Cmn::gPeriodicParms.mTestThreadProcessor,
-         Cmn::gPeriodicParms.mTestThreadPriority));
+   mValidFlag = false;
+   mDevFd = 0;
+}
 
-   // Set timer period.
-   BaseClass::mTimerPeriod = Cmn::gPeriodicParms.mTestThreadPeriod;
-   BaseClass::mPollProcessor = Cmn::gPeriodicParms.mPollProcessor;
-   BaseClass::mStatPeriod = Cmn::gPeriodicParms.mStatPeriod;
+void MyDev::initialize()
+{
+   // Close device, if open.
+   finalize();
 
-   // Set member variables.
-   mTPFlag = false;
+   // Open the device.
+   mDevFd = open(Cmn::gStrobeParms.mDevPath, O_RDWR);
+   if (mDevFd < 0)
+   {
+      printf("device open FAIL  %s %d %s\n", Cmn::gStrobeParms.mDevPath, errno, strerror(errno));
+   }
+   else
+   {
+      printf("device open PASS %s\n", Cmn::gStrobeParms.mDevPath);
+      mValidFlag = true;
+   }
+}
+
+void MyDev::finalize()
+{
+   // Close device, if open.
+   if (mValidFlag)
+   {
+      mValidFlag = false;
+      close(mDevFd);
+      mDevFd = -1;
+   }
 }
 
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Thread init function. This is called by the base class immediately 
-// after the thread starts running.
+// Write to the digital output for gpio A.
 
-void StrobeThread::threadInitFunction()
-{
-   gMyDev.initialize();
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-// Thread exit function, base class overload.
-
-void  StrobeThread::threadExitFunction()
-{
-   gMyDev.finalize();
-}
-
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-
-void StrobeThread::executeOnTimer(int aTimeCount)
+void MyDev::writeA(bool aValue)
 {
    // Guard.
-   if (!mTPFlag) return;
-   if (!gMyDev.mValidFlag) return;
+   if (!mValidFlag) return;
 
    // Write to the device driver.
-   gMyDev.writeA(aTimeCount % 2);
+   int tRet = 0;
+   char tBuffer[10];
+   if (aValue)
+   {
+      strcpy(tBuffer, "1\n");
+   }
+   else
+   {
+      strcpy(tBuffer, "0\n");
+   }
+   tRet = write(mDevFd, tBuffer, 2);
+   if (tRet < 0)
+   {
+      printf("device write FAIL  %d %s\n", errno, strerror(errno));
+      finalize();
+   }
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Read from the digital output for gpio B.
+
+bool MyDev::readB()
+{
+   return false;
 }
 
 //******************************************************************************

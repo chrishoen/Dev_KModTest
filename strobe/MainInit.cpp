@@ -3,8 +3,8 @@
 #include <sys/mman.h>
 
 #include "risThreadsProcess.h"
-#include "somePeriodicParms.h"
-#include "someStrobeParms.h"
+#include "cmnPeriodicParms.h"
+#include "cmnStrobeParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -45,14 +45,14 @@ void main_initialize(int argc,char** argv)
    // Initialize parms.
 
    // Read parameters files.
-   Some::gStrobeParms.reset();
-   Some::gStrobeParms.setFilePath(tParmsPath);
-   Some::gStrobeParms.readSection("Strobe");
+   Cmn::gStrobeParms.reset();
+   Cmn::gStrobeParms.setFilePath(tParmsPath);
+   Cmn::gStrobeParms.readSection("Strobe");
 
    // Read parameters files.
-   Some::gPeriodicParms.reset();
-   Some::gPeriodicParms.setFilePath(tParmsPath);
-   Some::gPeriodicParms.readSection("Periodic");
+   Cmn::gPeriodicParms.reset();
+   Cmn::gPeriodicParms.setFilePath(tParmsPath);
+   Cmn::gPeriodicParms.readSection("Periodic");
 
    //***************************************************************************
    //***************************************************************************

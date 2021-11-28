@@ -12,7 +12,7 @@ Description:
 #include "risProgramTime.h"
 #include "risThreadsPriorities.h"
 
-#include "somePeriodicParms.h"
+#include "cmnPeriodicParms.h"
 #include "someStrobeThread.h"
 
 #define  _SOMEMONITORTHREAD_CPP_
@@ -34,7 +34,7 @@ MonitorThread::MonitorThread()
    BaseClass::setThreadPriority(Ris::Threads::gPriorities.mMonitor);
 
    // Set timer period.
-   BaseClass::mTimerPeriod = gPeriodicParms.mMonitorThreadPeriod;
+   BaseClass::mTimerPeriod = Cmn::gPeriodicParms.mMonitorThreadPeriod;
 }
 
 //******************************************************************************

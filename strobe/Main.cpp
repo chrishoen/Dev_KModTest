@@ -5,7 +5,7 @@
 #include "CmdLineExec.h"
 #include "MainInit.h"
 
-#include "somePeriodicParms.h"
+#include "cmnPeriodicParms.h"
 #include "someStrobeThread.h"
 #include "someMonitorThread.h"
 

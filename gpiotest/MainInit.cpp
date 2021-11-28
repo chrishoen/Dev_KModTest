@@ -3,7 +3,7 @@
 #include <sys/mman.h>
 
 #include "risThreadsProcess.h"
-#include "somePeriodicParms.h"
+#include "cmnPeriodicParms.h"
 #include "cmnGPIO.h"
 
 //******************************************************************************
@@ -60,8 +60,8 @@ void main_initialize(int argc,char** argv)
    // Read parameters files.
 
    // Read parameters files.
-   Some::gPeriodicParms.reset();
-   Some::gPeriodicParms.readSection("default");
+   Cmn::gPeriodicParms.reset();
+   Cmn::gPeriodicParms.readSection("default");
 
    //***************************************************************************
    //***************************************************************************

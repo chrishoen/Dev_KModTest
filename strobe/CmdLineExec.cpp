@@ -1,8 +1,8 @@
 
 #include "stdafx.h"
 
-#include "somePeriodicParms.h"
-#include "someStrobeParms.h"
+#include "cmnPeriodicParms.h"
+#include "cmnStrobeParms.h"
 #include "someStrobeThread.h"
 
 #include "CmdLineExec.h"
@@ -96,11 +96,11 @@ void CmdLineExec::executeGo4(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
 {
-   Some::gPeriodicParms.readSection("Periodic");
-   Some::gPeriodicParms.show();
+   Cmn::gPeriodicParms.readSection("Periodic");
+   Cmn::gPeriodicParms.show();
 
-   Some::gStrobeParms.readSection("Strobe");
-   Some::gStrobeParms.show();
+   Cmn::gStrobeParms.readSection("Strobe");
+   Cmn::gStrobeParms.show();
 }
 
 //******************************************************************************
