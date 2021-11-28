@@ -1,12 +1,11 @@
 
 #include "stdafx.h"
 
-#include "cmnGPIO.h"
-#include "CmdLineExec.h"
-
 #include "somePeriodicParms.h"
+#include "someStrobeParms.h"
 #include "someStrobeThread.h"
-using namespace Some;
+
+#include "CmdLineExec.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -49,8 +48,6 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeWriteA(Ris::CmdLineCmd* aCmd)
 {
-   aCmd->setArgDefault(1, false);
-   Cmn::gGPIO.writeA(aCmd->argBool(1));
 }
 
 //******************************************************************************
@@ -59,7 +56,6 @@ void CmdLineExec::executeWriteA(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeReadB(Ris::CmdLineCmd* aCmd)
 {
-   Prn::print(0,"GpioB %d",Cmn::gGPIO.readB());
 }
 
 //******************************************************************************
@@ -100,9 +96,8 @@ void CmdLineExec::executeGo4(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
 {
-   Some::gPeriodicParms.reset();
-   Some::gPeriodicParms.readSection("default");
    Some::gPeriodicParms.show();
+   Some::gStrobeParms.show();
 }
 
 //******************************************************************************

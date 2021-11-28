@@ -4,7 +4,7 @@
 
 #include "risThreadsProcess.h"
 #include "somePeriodicParms.h"
-#include "cmnGPIO.h"
+#include "someStrobeParms.h"
 
 //******************************************************************************
 //******************************************************************************
@@ -30,6 +30,30 @@ void main_initialize(int argc,char** argv)
    // Enter process.
 
    Ris::Threads::enterProcessHigh();
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Program arguments.
+
+   char tParmsPath[100];
+   strcpy(tParmsPath, "/opt/prime/files/Program_Parms.txt");
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Initialize parms.
+
+   // Read parameters files.
+   Some::gPeriodicParms.reset();
+   Some::gPeriodicParms.setFilePath(tParmsPath);
+   Some::gPeriodicParms.readSection("Periodic");
+
+   // Read parameters files.
+   Some::gStrobeParms.reset();
+   Some::gStrobeParms.setFilePath(tParmsPath);
+   Some::gStrobeParms.readSection("Strobe");
+
 
    //***************************************************************************
    //***************************************************************************
@@ -61,15 +85,7 @@ void main_initialize(int argc,char** argv)
 
    // Read parameters files.
    Some::gPeriodicParms.reset();
-   Some::gPeriodicParms.readSection("default");
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Initialize.
-
-   // Initialize gpio.
-   Cmn::gGPIO.initialize();
+   Some::gPeriodicParms.readSection("");
 }
 
 //******************************************************************************

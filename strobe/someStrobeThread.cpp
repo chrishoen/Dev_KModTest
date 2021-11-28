@@ -13,7 +13,6 @@ Description:
 #include "risThreadsPriorities.h"
 
 #include "somePeriodicParms.h"
-#include "cmnGPIO.h"
 
 #define  _SOMESTROBETHREAD1_CPP_
 #include "someStrobeThread.h"
@@ -50,8 +49,6 @@ StrobeThread::StrobeThread()
 void StrobeThread::executeOnTimer(int aTimeCount)
 {
    if (!mTPFlag) return;
-
-   Cmn::gGPIO.writeA(aTimeCount % 2);
 }
 
 //******************************************************************************

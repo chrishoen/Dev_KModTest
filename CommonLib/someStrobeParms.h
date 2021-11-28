@@ -46,10 +46,9 @@ namespace Some
 // structure. If so, then this class is the root.
 // 
 
-class PeriodicParms : public Ris::BaseCmdLineParms
+class StrobeParms : public Ris::BaseCmdLineParms
 {
 public:
-
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
@@ -62,25 +61,17 @@ public:
    //***************************************************************************
    // Members.
 
+   // Device path.
+   char mDevPath[cMaxStringSize];
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Members.
 
-   // Test mode 1,2.
-   int  mTestMode;
-
-   // Timer thread variables.
-   int  mMonitorThreadPeriod;
-   int  mTestThreadPeriod;
-   int  mTestThreadProcessor;
-   int  mTestThreadPriority;
-   int  mStatPeriod;
-   bool mPollProcessor;
-
-   // Sample window size.
-   int mSampleSize;
-
+   // Test codes.
+   int mTestCode1;
+   int mTestCode2;
 
    //***************************************************************************
    //***************************************************************************
@@ -94,7 +85,7 @@ public:
 
    // Constructor,
    typedef Ris::BaseCmdLineParms BaseClass;
-   PeriodicParms();
+   StrobeParms();
    void reset();
    void show();
 
@@ -113,10 +104,10 @@ public:
 //******************************************************************************
 // Global instance.
 
-#ifdef _SOMEPERIODICPARMS_CPP_
-   PeriodicParms gPeriodicParms;
+#ifdef _SOMESTROBEPARMS_CPP_
+   StrobeParms gStrobeParms;
 #else
-   extern PeriodicParms gPeriodicParms;
+   extern StrobeParms gStrobeParms;
 #endif
 
 //******************************************************************************
