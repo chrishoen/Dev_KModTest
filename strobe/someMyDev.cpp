@@ -79,7 +79,7 @@ void MyDev::writeA(bool aValue)
 
    int tValue = aValue;
    int tRet = 0;
-   tRet = ioctl(mDevFd, 102, &tValue);
+   tRet = ioctl(mDevFd, 101, &tValue);
    if (tRet < 0)
    {
       printf("device ioctl FAIL  %d %s\n", errno, strerror(errno));
