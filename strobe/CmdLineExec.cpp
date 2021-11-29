@@ -38,8 +38,8 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("T1"))        executeTest1(aCmd);
    if (aCmd->isCmd("T2"))        executeTest2(aCmd);
 
-   if (aCmd->isCmd("0"))         executeFn0(aCmd);
-   if (aCmd->isCmd("1"))         executeFn1(aCmd);
+   if (aCmd->isCmd("S"))         executeFn0(aCmd);
+   if (aCmd->isCmd("R"))         executeFn1(aCmd);
 
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
