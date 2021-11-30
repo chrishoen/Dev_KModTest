@@ -40,6 +40,39 @@ MonitorThread::MonitorThread()
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
+// Thread init function. This is called by the base class immediately 
+// after the thread starts running.
+
+void MonitorThread::threadInitFunction()
+{
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Thread exit function, base class overload.
+
+void MonitorThread::threadExitFunction()
+{
+   Prn::print(0, "MonitorThread::threadExitFunction BEGIN");
+   Prn::print(0, "MonitorThread::threadExitFunction END");
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Thread shutdown function.
+
+void MonitorThread::shutdownThread()
+{
+   Prn::print(0, "MonitorThread::shutdownThread BEGIN");
+   BaseClass::shutdownThread();
+   Prn::print(0, "MonitorThread::shutdownThread END");
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
 
 void MonitorThread::executeOnTimer(int aTimeCount)
 {
