@@ -55,6 +55,9 @@ public:
    // before the thread is terminated.
    void threadExitFunction() override;
 
+   // Thread shutdown function.
+   void shutdownThread() override;
+
    // Execute periodically. This is called by the base class timer.
    void executeOnTimer(int aTimerCount) override;
 

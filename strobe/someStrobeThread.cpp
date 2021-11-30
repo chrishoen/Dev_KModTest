@@ -58,9 +58,21 @@ void StrobeThread::threadInitFunction()
 //******************************************************************************
 // Thread exit function, base class overload.
 
-void  StrobeThread::threadExitFunction()
+void StrobeThread::threadExitFunction()
 {
    gMyDev.finalize();
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Thread shutdown function.
+
+void StrobeThread::shutdownThread()
+{
+   Prn::print(0, "StrobeThread::shutdownThread BEGIN");
+   BaseClass::shutdownThread();
+   Prn::print(0, "StrobeThread::shutdownThread END");
 }
 
 //******************************************************************************
