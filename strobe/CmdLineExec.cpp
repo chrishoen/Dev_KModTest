@@ -35,7 +35,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("TP"))        Some::gStrobeThread->mTPFlag = aCmd->argBool(1);
    if (aCmd->isCmd("W"))         executeWriteA(aCmd);
    if (aCmd->isCmd("S"))         executeStrobeA(aCmd);
-   if (aCmd->isCmd("R"))         executeReadB(aCmd);
+   if (aCmd->isCmd("C"))         executeCount(aCmd);
    if (aCmd->isCmd("T1"))        executeTest1(aCmd);
    if (aCmd->isCmd("T2"))        executeTest2(aCmd);
 
@@ -72,7 +72,7 @@ void CmdLineExec::executeStrobeA(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeReadB(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeCount(Ris::CmdLineCmd* aCmd)
 {
    int tCount = Some::gMyDev.readCount();
    Prn::print(0, "Count  %d", tCount);
