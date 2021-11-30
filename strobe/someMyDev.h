@@ -58,8 +58,8 @@ public:
    // Write to the digital output for gpio A.
    void writeA(bool aValue);
 
-   // Read from the digital output for gpio B.
-   bool readB();
+   // Read the isr count.
+   int readCount();
 
    // Do an ioctl test.
    void doTest1(int* aValue);

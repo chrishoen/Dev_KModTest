@@ -90,11 +90,23 @@ void MyDev::writeA(bool aValue)
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-// Read from the digital output for gpio B.
+// Read the isr count.
 
-bool MyDev::readB()
+int MyDev::readCount()
 {
-   return false;
+   // Guard.
+   if (!mValidFlag) return 0;
+
+   int tRet = 0;
+   int tCount = 0;
+   tRet = ioctl(mDevFd, 102, &tCount);
+   if (tRet < 0)
+   {
+      printf("device ioctl FAIL  %d %s\n", errno, strerror(errno));
+      finalize();
+   }
+
+   return tCount;
 }
 
 //******************************************************************************

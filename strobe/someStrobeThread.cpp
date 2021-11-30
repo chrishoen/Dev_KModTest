@@ -60,7 +60,9 @@ void StrobeThread::threadInitFunction()
 
 void StrobeThread::threadExitFunction()
 {
+   Prn::print(0, "StrobeThread::threadExitFunction BEGIN");
    gMyDev.finalize();
+   Prn::print(0, "StrobeThread::threadExitFunction END");
 }
 
 //******************************************************************************
