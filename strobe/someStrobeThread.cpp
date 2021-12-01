@@ -39,7 +39,7 @@ StrobeThread::StrobeThread()
    BaseClass::mStatPeriod = Cmn::gPeriodicParms.mStatPeriod;
 
    // Set member variables.
-   mTPFlag = false;
+   mTPFlag = true;
 }
 
 //******************************************************************************
@@ -60,9 +60,9 @@ void StrobeThread::threadInitFunction()
 
 void StrobeThread::threadExitFunction()
 {
-   Prn::print(0, "StrobeThread::threadExitFunction BEGIN");
+   Prn::print(Prn::Show4, "StrobeThread::threadExitFunction BEGIN");
    gMyDev.finalize();
-   Prn::print(0, "StrobeThread::threadExitFunction END");
+   Prn::print(Prn::Show4, "StrobeThread::threadExitFunction END");
 }
 
 //******************************************************************************
@@ -72,9 +72,9 @@ void StrobeThread::threadExitFunction()
 
 void StrobeThread::shutdownThread()
 {
-   Prn::print(0, "StrobeThread::shutdownThread BEGIN");
+   Prn::print(Prn::Show4, "StrobeThread::shutdownThread BEGIN");
    BaseClass::shutdownThread();
-   Prn::print(0, "StrobeThread::shutdownThread END");
+   Prn::print(Prn::Show4, "StrobeThread::shutdownThread END");
 }
 
 //******************************************************************************
