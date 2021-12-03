@@ -54,8 +54,8 @@ void MonitorThread::threadInitFunction()
 
 void MonitorThread::threadExitFunction()
 {
-   Prn::print(Prn::Show4, "MonitorThread::threadExitFunction BEGIN");
-   Prn::print(Prn::Show4, "MonitorThread::threadExitFunction END");
+   Prn::print(Prn::Show2, "MonitorThread::threadExitFunction BEGIN");
+   Prn::print(Prn::Show2, "MonitorThread::threadExitFunction END");
 }
 
 //******************************************************************************
@@ -65,9 +65,9 @@ void MonitorThread::threadExitFunction()
 
 void MonitorThread::shutdownThread()
 {
-   Prn::print(Prn::Show4, "MonitorThread::shutdownThread BEGIN");
+   Prn::print(Prn::Show2, "MonitorThread::shutdownThread BEGIN");
    BaseClass::shutdownThread();
-   Prn::print(Prn::Show4, "MonitorThread::shutdownThread END");
+   Prn::print(Prn::Show2, "MonitorThread::shutdownThread END");
 }
 
 //******************************************************************************

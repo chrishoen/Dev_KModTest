@@ -41,6 +41,7 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("0"))         executeFn0(aCmd);
    if (aCmd->isCmd("1"))         executeFn1(aCmd);
+   if (aCmd->isCmd("2"))         executeFn2(aCmd);
 
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
@@ -121,6 +122,17 @@ void CmdLineExec::executeFn1(Ris::CmdLineCmd* aCmd)
    Prn::unsuppressPrint();
    Prn::setFilter(Prn::Show1, true);
    Prn::setFilter(Prn::Show2, false);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeFn2(Ris::CmdLineCmd* aCmd)
+{
+   Prn::unsuppressPrint();
+   Prn::setFilter(Prn::Show1, true);
+   Prn::setFilter(Prn::Show2, true);
 }
 
 //******************************************************************************

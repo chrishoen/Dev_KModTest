@@ -62,6 +62,7 @@ public:
 
    void executeFn0(Ris::CmdLineCmd* aCmd);
    void executeFn1(Ris::CmdLineCmd* aCmd);
+   void executeFn2(Ris::CmdLineCmd* aCmd);
 
    void executeGo1      (Ris::CmdLineCmd* aCmd);
    void executeGo2      (Ris::CmdLineCmd* aCmd);
