@@ -2,18 +2,16 @@
 #*******************************************************************************
 #*******************************************************************************
 
-function(my_special1)
+function(my_lib_import_CommonLib _target)
 
-   message(STATUS "my_special***********************************************************BEGIN")
-   if(MSVC)
-      message(STATUS "my_special MSVC")
-   elseif(NOT CMAKE_SYSTEM_VERSION EQUAL 101)
-      message(STATUS "my_special LINUX")
-   else()
-      message(STATUS "my_special LINUX BEAGLE")
-   endif()
+   target_link_libraries(${_target} CommonLib)
 
-   message(STATUS "my_special***********************************************************END")
+endfunction()
+
+function(my_inc_import_CommonLib _target)
+
+   target_include_directories(${_target} PRIVATE $<TARGET_PROPERTY:CommonLib,INTERFACE_INCLUDE_DIRECTORIES>)
+
 endfunction()
 
 #*******************************************************************************
