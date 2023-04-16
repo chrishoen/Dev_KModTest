@@ -19,9 +19,6 @@ namespace Cmn
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
 // Constructor.
 
 PeriodicParms::PeriodicParms()
@@ -38,18 +35,21 @@ void PeriodicParms::reset()
    }
    else
    {
-      BaseClass::setFilePath("/opt/prime/files/Periodic_Parms.txt");
+      BaseClass::setFilePath_RelativeToBaseDir("files/Periodic_Parms.txt");
    }
 
    mTestMode = 1;
-
-   mMonitorThreadPeriod = 0;
-   mTestThreadPeriod = 0;
    mTestThreadProcessor = -1;
    mTestThreadPriority = 80;
-   mStatPeriod = 0;
-   mSampleSize = 0;
    mPollProcessor = false;
+
+   mMonitorThreadPeriod = 0;
+   mStatPeriod = 0;
+   mPeriodUs = 0;
+
+   mIntervalMeanMs = 0;
+   mIntervalRandomUs = 0;
+
 }
 
 //******************************************************************************
@@ -65,13 +65,17 @@ void PeriodicParms::show()
    printf("\n");
    printf("TestMode                 %-10d\n", mTestMode);
    printf("\n");
-   printf("MonitorThreadPeriod      %-10d\n", mMonitorThreadPeriod);
-   printf("TestThreadPeriod         %-10d\n", mTestThreadPeriod);
    printf("TestThreadProcessor      %-10d\n", mTestThreadProcessor);
    printf("TestThreadPriority       %-10d\n", mTestThreadPriority);
-   printf("StatPeriod               %-10d\n", mStatPeriod);
-   printf("SampleSize               %-10d\n", mSampleSize);
    printf("PollProcessor            %-10s\n", my_string_from_bool(mPollProcessor));
+   printf("\n");
+   printf("MonitorThreadPeriod      %-10d\n", mMonitorThreadPeriod);
+   printf("StatPeriod               %-10d\n", mStatPeriod);
+   printf("PeriodUs                 %-10d\n", mPeriodUs);
+   printf("\n");
+   printf("IntervalMeanMs           %-10d\n", mIntervalMeanMs);
+   printf("IntervalRandomUs         %-10d\n", mIntervalRandomUs);
+   printf("\n");
 }
 
 //******************************************************************************
@@ -87,13 +91,16 @@ void PeriodicParms::execute(Ris::CmdLineCmd* aCmd)
 
    if (aCmd->isCmd("TestMode"))              mTestMode = aCmd->argInt(1);
 
-   if (aCmd->isCmd("MonitorThreadPeriod"))   mMonitorThreadPeriod = aCmd->argInt(1);
-   if (aCmd->isCmd("TestThreadPeriod"))      mTestThreadPeriod = aCmd->argInt(1);
    if (aCmd->isCmd("TestThreadProcessor"))   mTestThreadProcessor = aCmd->argInt(1);
    if (aCmd->isCmd("TestThreadPriority"))    mTestThreadPriority = aCmd->argInt(1);
-   if (aCmd->isCmd("StatPeriod"))            mStatPeriod = aCmd->argInt(1);
-   if (aCmd->isCmd("SampleSize"))            mSampleSize = aCmd->argInt(1);
    if (aCmd->isCmd("PollProcessor"))         mPollProcessor = aCmd->argBool(1);
+
+   if (aCmd->isCmd("MonitorThreadPeriod"))   mMonitorThreadPeriod = aCmd->argInt(1);
+   if (aCmd->isCmd("StatPeriod"))            mStatPeriod = aCmd->argInt(1);
+   if (aCmd->isCmd("PeriodUs"))              mPeriodUs = aCmd->argInt(1);
+
+   if (aCmd->isCmd("IntervalMeanMs"))        mIntervalMeanMs = aCmd->argInt(1);
+   if (aCmd->isCmd("IntervalRandomUs"))      mIntervalRandomUs = aCmd->argInt(1);
 }
 
 //******************************************************************************

@@ -27,12 +27,12 @@ int main(int argc,char** argv)
    //***************************************************************************
    // Launch program threads.
 
-   if (false)
+   if (true)
    {
       Some::gStrobeThread = new Some::StrobeThread;
       Some::gStrobeThread->launchThread();
    }
-   if (false)
+   if (true)
    {
       Some::gMonitorThread = new Some::MonitorThread;
       Some::gMonitorThread->launchThread();
