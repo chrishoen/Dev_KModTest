@@ -79,6 +79,9 @@ void main_initialize(int argc,char** argv)
 
 void main_finalize()
 {
+   // Finalize gpio.
+   Cmn::gGPIO.finalize();
+
    // Finalize print facility.
    Prn::finalizePrint();
 

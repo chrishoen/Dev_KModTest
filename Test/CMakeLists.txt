@@ -1,23 +1,12 @@
-﻿cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required(VERSION 3.10)
+set (project "Test")
+project(${project} CXX)
+my_find_src_files (src_files ${project})
+add_executable (${project} ${src_files})
+my_add_pch (${project})
 
-project (Test CXX)
-
-my_find_src_files (src_files Test)
-add_executable (Test ${src_files})
-my_add_compile_options (Test)
-my_add_pch (Test)
-
-
-my_inc_import_RisLib(Test)
-my_lib_import_RisLib(Test)
+my_inc_import_RisLib(${project})
+my_lib_import_RisLib(${project})
 
 
-if(NOT CMAKE_SYSTEM_VERSION EQUAL 101)
-   install(TARGETS Test DESTINATION "/opt/prime/bin")
-else()
-   add_custom_command(
-      TARGET  Test
-      POST_BUILD
-      COMMAND rsync -azv --chmod=ugo=rwx Test rsync://debian@devtgt/prime/bin
-      WORKING_DIRECTORY C:/Users/$ENV{username}/CMakeBuilds/Dev_Example/Test)
-endif()
+include("${MY_MACRO_DIR}/MyInstall.cmake")

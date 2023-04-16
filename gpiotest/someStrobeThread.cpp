@@ -35,9 +35,9 @@ StrobeThread::StrobeThread()
          Cmn::gPeriodicParms.mTestThreadPriority));
 
    // Set timer period.
-   BaseClass::mTimerPeriod = Cmn::gPeriodicParms.mTestThreadPeriod;
    BaseClass::mPollProcessor = Cmn::gPeriodicParms.mPollProcessor;
    BaseClass::mStatPeriod = Cmn::gPeriodicParms.mStatPeriod;
+   BaseClass::mPeriodUs = Cmn::gPeriodicParms.mTestThreadPeriod;
 
    // Set member variables.
    mTPFlag = false;

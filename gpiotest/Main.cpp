@@ -27,10 +27,16 @@ int main(int argc,char** argv)
    //***************************************************************************
    // Launch program threads.
 
-   Some::gStrobeThread = new Some::StrobeThread;
-   Some::gStrobeThread->launchThread();
-   Some::gMonitorThread = new Some::MonitorThread;
-   Some::gMonitorThread->launchThread();
+   if (false)
+   {
+      Some::gStrobeThread = new Some::StrobeThread;
+      Some::gStrobeThread->launchThread();
+   }
+   if (false)
+   {
+      Some::gMonitorThread = new Some::MonitorThread;
+      Some::gMonitorThread->launchThread();
+   }
 
    //***************************************************************************
    //***************************************************************************
@@ -38,9 +44,8 @@ int main(int argc,char** argv)
    // Show program threads.
 
    Ris::Threads::showCurrentThreadInfo();
-   Some::gStrobeThread->showThreadInfo();
-   Some::gMonitorThread->showThreadInfo();
-
+   if (Some::gStrobeThread) Some::gStrobeThread->showThreadInfo();
+   if (Some::gMonitorThread) Some::gMonitorThread->showThreadInfo();
 
    //***************************************************************************
    //***************************************************************************
@@ -55,14 +60,19 @@ int main(int argc,char** argv)
    //***************************************************************************
    //***************************************************************************
    // Shutdown program Threads.
+   if (Some::gStrobeThread)
+   {
+      Some::gMonitorThread->shutdownThread();
+      delete Some::gMonitorThread;
+      Some::gMonitorThread = 0;
+   }
 
-   Some::gMonitorThread->shutdownThread();
-   delete Some::gMonitorThread;
-   Some::gMonitorThread = 0;
-
-   Some::gStrobeThread->shutdownThread();
-   delete Some::gStrobeThread;
-   Some::gStrobeThread = 0;
+   if (Some::gMonitorThread)
+   {
+      Some::gStrobeThread->shutdownThread();
+      delete Some::gStrobeThread;
+      Some::gStrobeThread = 0;
+   }
 
    //***************************************************************************
    //***************************************************************************

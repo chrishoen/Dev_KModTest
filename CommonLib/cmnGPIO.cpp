@@ -7,7 +7,6 @@ Description:
 //******************************************************************************
 
 #include "stdafx.h"
-#include "wiringPi.h"
 #include "risThreadsThreads.h"
 
 #define  _CMNGPIO_CPP_
@@ -27,14 +26,49 @@ GPIO::GPIO()
 
 void GPIO::initialize()
 {
-   wiringPiSetupGpio();
-   pinMode(cGpioA, OUTPUT);
-   pinMode(cGpioB, INPUT);
+   // Chip 0.
+   if ((mChip0 = gpiod_chip_open_by_name("gpiochip0")) == 0)
+   {
+      printf("GPIO::initialize FAIL1");
+      return;
+   }
+
+   // Chip 1.
+   if ((mChip1 = gpiod_chip_open_by_name("gpiochip1")) == 0)
+   {
+      printf("GPIO::initialize FAIL2");
+      return;
+   }
+
+   // LineA. Chip0 Line5. Gpio5. Pin29. Output.
+   if ((mLineA = gpiod_chip_get_line(mChip0, 5)) == 0)
+   {
+      printf("GPIO::initialize FAIL3");
+      return;
+   }
+   if (gpiod_line_request_output(mLineA, "CmnGpio", 0))
+   {
+      printf("GPIO::initialize FAIL4");
+      return;
+   }
+
+   // LineB. Chip0 Line6. Gpio6. Pin31. Input.
+   if ((mLineB = gpiod_chip_get_line(mChip0, 6)) == 0)
+   {
+      printf("GPIO::initialize FAIL4");
+      return;
+   }
+   if (gpiod_line_request_input(mLineB, "CmnGpio"))
+   {
+      printf("GPIO::initialize FAIL4");
+      return;
+   }
 }
 
 void GPIO::finalize()
 {
-
+   gpiod_line_release(mLineA);
+   gpiod_line_release(mLineB);
 }
 
 //******************************************************************************
@@ -44,13 +78,10 @@ void GPIO::finalize()
 
 void GPIO::writeA(bool aValue)
 {
-   if (aValue)
+   if (gpiod_line_set_value(mLineA, aValue))
    {
-      digitalWrite(cGpioA, HIGH);
-   }
-   else
-   {
-      digitalWrite(cGpioA, LOW);
+      printf("GPIO::WriteA");
+      return;
    }
 }
 
@@ -61,7 +92,7 @@ void GPIO::writeA(bool aValue)
 
 bool GPIO::readB()
 {
-   return digitalRead(cGpioB) == HIGH;
+   return gpiod_line_get_value(mLineB);
 }
 
 //******************************************************************************
